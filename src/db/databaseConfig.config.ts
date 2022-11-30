@@ -1,4 +1,8 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { Client } from 'src/modules/client/entities/Client.entity';
+import { Account } from '../modules/account/entities/Account.entity';
+import { Movement } from '../modules/movement/entities/Movement.entity';
+import { Setting } from '../modules/setting/entities/Setting.entity';
 
 export const databaseConfig: TypeOrmModuleOptions = {
   name: 'default',
@@ -9,5 +13,6 @@ export const databaseConfig: TypeOrmModuleOptions = {
   password: '1234',
   database: '',
   synchronize: false,
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  entities: [Client, Account, Movement, Setting],
+  // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
 };
