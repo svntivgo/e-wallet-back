@@ -25,6 +25,7 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/typeorm": "^9.0.1",
     "@sap/hana-client": "^2.14.23",
     "hdb-pool": "^0.1.6",
     "pg": "^8.8.0",
