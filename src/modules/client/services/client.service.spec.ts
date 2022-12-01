@@ -3,6 +3,7 @@ import { ClientService } from './client.service';
 import { createClientDto } from '../dtos/createClientDto.dto';
 import { Repository } from 'typeorm';
 import { Client } from '../entities/Client.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('ClientService', () => {
   let service: ClientService;
@@ -22,14 +23,14 @@ describe('ClientService', () => {
       providers: [
         ClientService,
         {
-          provide: Repository<Client>,
+          provide: getRepositoryToken(Client),
           useFactory: repositoryMockFactory,
         },
       ],
     }).compile();
 
     service = module.get<ClientService>(ClientService);
-    repositoryMock = module.get(Repository<Client>);
+    repositoryMock = module.get(getRepositoryToken(Client));
   });
 
   it('should be defined', () => {
