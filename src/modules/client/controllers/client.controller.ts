@@ -13,12 +13,12 @@ export class ClientController {
   }
 
   @Get()
-  getClients(): Promise<Client[]> {
-    return this.service.getClients();
+  async getClients(): Promise<Client[]> {
+    return await this.service.getClients();
   }
 
-  @Get()
-  getClientByPhoneEmail(@Body() phoneEmail: string): Client {
-    return new Client();
+  @Get('phone-email')
+  async getClientByPhoneEmail(@Body() phoneEmail: any): Promise<Client> {
+    return await this.service.getClientByPhoneEmail(phoneEmail?.phoneEmail);
   }
 }

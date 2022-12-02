@@ -31,6 +31,16 @@ export class ClientService {
   }
 
   async getClientByPhoneEmail(phoneEmail: string): Promise<Client> {
-    return new Client();
+    const emailRegex =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+    const phoneRegex = /[0-9]{10}/g;
+
+    if (emailRegex.test(phoneEmail))
+      return await this.repository.findOneByOrFail({ email: phoneEmail });
+
+    if (phoneRegex.test(phoneEmail))
+      return await this.repository.findOneByOrFail({ phone: phoneEmail });
+
+    throw new Error('No se encontró ningún usuario');
   }
 }

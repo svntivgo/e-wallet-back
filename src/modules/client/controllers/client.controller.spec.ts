@@ -17,6 +17,7 @@ describe('ClientController', () => {
           useValue: {
             createClient: jest.fn().mockResolvedValue(new Client()),
             getClients: jest.fn().mockResolvedValue(new Array<Client>()),
+            getClientByPhoneEmail: jest.fn().mockResolvedValue(new Client()),
           },
         },
       ],
@@ -80,29 +81,40 @@ describe('ClientController', () => {
     });
   });
 
-  // it('getClientByEmailPhone should returned client by email', async () => {
-  //   // Arrange
-  //   const email = 'john.doe@email.com';
-  //   const client = new Client();
-  //   client.email = email;
-  //   const expectedByEmail = client;
-  //   // Act
-  //   const result = controller.getClientByPhoneEmail(email);
-  //   result.email = email;
-  //   // Assert
-  //   expect(result).toEqual(expectedByEmail);
-  // });
+  describe('getClientByPhoneEmail', () => {
+    it('getClients should call service.getClientByPhoneEmail', async () => {
+      // Arrange
+      const email = 'john@example.com';
+      // Act
+      await controller.getClientByPhoneEmail(email);
+      // Assert
+      expect(service.getClientByPhoneEmail).toHaveBeenCalled();
+    });
 
-  // it('getClientByEmailPhone should returned client by phone', async () => {
-  //   // Arrange
-  //   const phone = '3101234567';
-  //   const client = new Client();
-  //   client.phone = phone;
-  //   const expectedByEmail = client;
-  //   // Act
-  //   const result = controller.getClientByPhoneEmail(phone);
-  //   result.phone = phone;
-  //   // Assert
-  //   expect(result).toEqual(expectedByEmail);
-  // });
+    it('getClientByEmailPhone should returned client by email', async () => {
+      // Arrange
+      const email = 'john.doe@email.com';
+      const client = await service.getClientByPhoneEmail(email);
+      client.email = 'john@example.com';
+      // Act
+      const result = await controller.getClientByPhoneEmail(email);
+      result.email = email;
+      // Assert
+      expect(result).toBeInstanceOf(Client);
+      expect(result.email).toEqual(client.email);
+    });
+
+    it('getClientByEmailPhone should returned client by phone', async () => {
+      // Arrange
+      const phone = '1234567890';
+      const client = await service.getClientByPhoneEmail(phone);
+      client.phone = '1234567890';
+      // Act
+      const result = await controller.getClientByPhoneEmail(phone);
+      result.phone = phone;
+      // Assert
+      expect(result).toBeInstanceOf(Client);
+      expect(result.phone).toEqual(client.phone);
+    });
+  });
 });

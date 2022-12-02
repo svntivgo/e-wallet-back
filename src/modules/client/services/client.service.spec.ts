@@ -17,6 +17,8 @@ describe('ClientService', () => {
   const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
     () => ({
       save: jest.fn().mockResolvedValue(new Client()),
+      find: jest.fn(),
+      findOneByOrFail: jest.fn(),
     }),
   );
 
@@ -47,7 +49,7 @@ describe('ClientService', () => {
     createDto.photo = 'http://example.com/photo.jpg';
     createDto.password = 'password';
 
-    fit('createClient should call repositorys save method', async () => {
+    it('createClient should call repositorys save method', async () => {
       // Arrange
       const dto = createDto;
       const repository = jest.spyOn(repositoryMock, 'save');
@@ -57,7 +59,7 @@ describe('ClientService', () => {
       expect(repository).toHaveBeenCalled();
     });
 
-    fit('createClient should return repositorys response with a new client', async () => {
+    it('createClient should return repositorys response with a new client', async () => {
       // Arrange
       const dto = createDto;
       const newClient = new Client();
@@ -95,7 +97,8 @@ describe('ClientService', () => {
 
     it('getClients should returned array of clients', async () => {
       // Arrange
-      const expected: Array<Client> = [];
+      const expected = new Array<Client>();
+      repositoryMock.find?.mockResolvedValue(new Array<Client>());
       // Act
       const result = await service.getClients();
       // Assert
@@ -103,29 +106,38 @@ describe('ClientService', () => {
     });
   });
 
-  // it('getClientByEmailPhone should returned client by email', async () => {
-  //   // Arrange
-  //   const email = 'john.doe@email.com';
-  //   const client = new Client();
-  //   client.email = email;
-  //   const expectedByEmail = client;
-  //   // Act
-  //   const result = await service.getClientByPhoneEmail(email);
-  //   result.email = email;
-  //   // Assert
-  //   expect(result).toEqual(expectedByEmail);
-  // });
+  describe('getClientByEmailPhone', () => {
+    it('getClientByEmailPhone should call repositorys findOneByOrFail', async () => {
+      // Arrange
+      const email = 'john@example.com';
+      // Act
+      await service.getClientByPhoneEmail(email);
+      // Assert
+      expect(repositoryMock.findOneByOrFail).toHaveBeenCalled();
+    });
 
-  // it('getClientByEmailPhone should returned client by phone', async () => {
-  //   // Arrange
-  //   const phone = '3101234567';
-  //   const client = new Client();
-  //   client.phone = phone;
-  //   const expectedByPhone = client;
-  //   // Act
-  //   const result = await service.getClientByPhoneEmail(phone);
-  //   result.phone = phone;
-  //   // Assert
-  //   expect(result).toEqual(expectedByPhone);
-  // });
+    it('getClientByEmailPhone should return client by email given', async () => {
+      // Arrange
+      const email = 'john@example.com';
+      const client = new Client();
+      client.email = 'john@example.com';
+      repositoryMock.findOneByOrFail?.mockResolvedValue(client);
+      // Act
+      const result = await service.getClientByPhoneEmail(email);
+      // Assert
+      expect(result.email).toEqual(email);
+    });
+
+    it('getClientByEmailPhone should return client by phone given', async () => {
+      // Arrange
+      const phone = '1234567890';
+      const client = new Client();
+      client.phone = '1234567890';
+      repositoryMock.findOneByOrFail?.mockResolvedValue(client);
+      // Act
+      const result = await service.getClientByPhoneEmail(phone);
+      // Assert
+      expect(result.phone).toEqual(phone);
+    });
+  });
 });
