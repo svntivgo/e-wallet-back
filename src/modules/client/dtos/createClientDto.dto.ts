@@ -3,4 +3,5 @@ export class createClientDto {
   email: string;
   phone: string;
   photo: string;
+  password: string;
 }

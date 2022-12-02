@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { Column, Entity, Index, OneToOne } from 'typeorm';
 import { Account } from '../../account/entities/Account.entity';
 import { Setting } from '../../setting/entities/Setting.entity';
@@ -8,7 +9,7 @@ import { Setting } from '../../setting/entities/Setting.entity';
 @Entity('client', { schema: 'public' })
 export class Client {
   @Column('uuid', { primary: true, name: 'cli_id' })
-  id: string;
+  id: string = randomUUID();
 
   @Column('character varying', { name: 'cli_full_name', length: 500 })
   fullName: string;

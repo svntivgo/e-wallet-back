@@ -11,7 +11,7 @@ export const databaseConfig: TypeOrmModuleOptions = {
   port: 5432,
   username: 'postgres',
   password: '1234',
-  database: '',
+  database: 'e-wallet',
   synchronize: false,
   entities: [Client, Account, Movement, Setting],
   // entities: [__dirname + '/../**/*.entity{.ts,.js}'],

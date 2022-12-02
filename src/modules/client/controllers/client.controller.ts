@@ -1,12 +1,15 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { createClientDto } from '../dtos/createClientDto.dto';
 import { Client } from '../entities/Client.entity';
+import { ClientService } from '../services/client.service';
 
 @Controller('client')
 export class ClientController {
+  constructor(private service: ClientService) {}
+
   @Post()
-  createClient(@Body() client: createClientDto): Client {
-    return new Client();
+  async createClient(@Body() client: createClientDto): Promise<Client> {
+    return await this.service.createClient(client);
   }
 
   @Get()
