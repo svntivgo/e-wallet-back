@@ -47,7 +47,7 @@ describe('ClientService', () => {
     createDto.photo = 'http://example.com/photo.jpg';
     createDto.password = 'password';
 
-    fit('createClient should call return repositorys response with a new client', async () => {
+    fit('createClient should call repositorys save method', async () => {
       // Arrange
       const dto = createDto;
       const repository = jest.spyOn(repositoryMock, 'save');
@@ -57,7 +57,7 @@ describe('ClientService', () => {
       expect(repository).toHaveBeenCalled();
     });
 
-    fit('createClient should call return repositorys response with a new client', async () => {
+    fit('createClient should return repositorys response with a new client', async () => {
       // Arrange
       const dto = createDto;
       const newClient = new Client();
@@ -83,14 +83,25 @@ describe('ClientService', () => {
     });
   });
 
-  // it('getClients should returned array of clients', async () => {
-  //   // Arrange
-  //   const expected: Array<Client> = [];
-  //   // Act
-  //   const result = await service.getClients();
-  //   // Assert
-  //   expect(result).toEqual(expected);
-  // });
+  describe('getClients', () => {
+    it('getClients should call repositorys find method', async () => {
+      // Arrange
+
+      // Act
+      await service.getClients();
+      // Assert
+      expect(repositoryMock.find).toHaveBeenCalled();
+    });
+
+    it('getClients should returned array of clients', async () => {
+      // Arrange
+      const expected: Array<Client> = [];
+      // Act
+      const result = await service.getClients();
+      // Assert
+      expect(result).toEqual(expected);
+    });
+  });
 
   // it('getClientByEmailPhone should returned client by email', async () => {
   //   // Arrange

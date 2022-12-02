@@ -15,11 +15,6 @@ export class TokenInterceptor implements NestInterceptor {
     const token = bearer.replace('Bearer ', '').trim();
     console.log('Interceptor before: ', token);
 
-    return next.handle().pipe(
-      map((x) => {
-        const response = httpReq.getResponse();
-        console.log('Interceptor after: ', x);
-      }),
-    );
+    return next.handle();
   }
 }

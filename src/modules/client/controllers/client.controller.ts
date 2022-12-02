@@ -13,9 +13,8 @@ export class ClientController {
   }
 
   @Get()
-  getClients(): Client[] {
-    const clients: Array<Client> = [];
-    return clients;
+  getClients(): Promise<Client[]> {
+    return this.service.getClients();
   }
 
   @Get()

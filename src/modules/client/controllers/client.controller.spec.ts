@@ -15,7 +15,8 @@ describe('ClientController', () => {
         {
           provide: ClientService,
           useValue: {
-            createClient: jest.fn().mockResolvedValue(new Client()), // really it can be anything, but the closer to your actual logic the better
+            createClient: jest.fn().mockResolvedValue(new Client()),
+            getClients: jest.fn().mockResolvedValue(new Array<Client>()),
           },
         },
       ],
@@ -56,6 +57,26 @@ describe('ClientController', () => {
       const result = await controller.createClient(dto);
       // Assert
       expect(result).toBeInstanceOf(Client);
+    });
+  });
+
+  describe('getClients', () => {
+    it('getClients should call service.getClients', async () => {
+      // Arrange
+
+      // Act
+      await controller.getClients();
+      // Assert
+      expect(service.getClients).toHaveBeenCalled();
+    });
+
+    it('getClients should return an array of clients', async () => {
+      // Arrange
+      const expected = new Array<Client>();
+      // Act
+      const result = await controller.getClients();
+      // Assert
+      expect(result).toEqual(expected);
     });
   });
 

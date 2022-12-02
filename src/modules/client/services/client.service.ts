@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { createClientDto } from '../dtos/createClientDto.dto';
 import { Client } from '../entities/Client.entity';
 import { Setting } from '../../setting/entities/Setting.entity';
-import { Movement } from '../../movement/entities/Movement.entity';
 
 @Injectable()
 export class ClientService {
@@ -24,13 +23,11 @@ export class ClientService {
     newClient.account.movements = [];
     newClient.setting = new Setting();
 
-    const createdClient = await this.repository.save(newClient);
-    return createdClient;
+    return await this.repository.save(newClient);
   }
 
   async getClients(): Promise<Client[]> {
-    const clients: Client[] = [];
-    return clients;
+    return await this.repository.find();
   }
 
   async getClientByPhoneEmail(phoneEmail: string): Promise<Client> {
