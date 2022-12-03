@@ -43,7 +43,7 @@ describe('ClientController', () => {
       // Act
       await controller.createClient(dto);
       // Assert
-      expect(service.createClient).toHaveBeenCalledWith(dto);
+      expect(service.createClient).toBeCalledWith(dto);
     });
 
     it('createClient should return new client', async () => {
@@ -68,7 +68,7 @@ describe('ClientController', () => {
       // Act
       await controller.getClients();
       // Assert
-      expect(service.getClients).toHaveBeenCalled();
+      expect(service.getClients).toBeCalled();
     });
 
     it('getClients should return an array of clients', async () => {
@@ -88,7 +88,7 @@ describe('ClientController', () => {
       // Act
       await controller.getClientByPhoneEmail(email);
       // Assert
-      expect(service.getClientByPhoneEmail).toHaveBeenCalled();
+      expect(service.getClientByPhoneEmail).toBeCalled();
     });
 
     it('getClientByEmailPhone should returned client by email', async () => {

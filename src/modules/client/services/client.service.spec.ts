@@ -56,7 +56,7 @@ describe('ClientService', () => {
       // Act
       await service.createClient(dto);
       // Assert
-      expect(repository).toHaveBeenCalled();
+      expect(repository).toBeCalled();
     });
 
     it('createClient should return repositorys response with a new client', async () => {
@@ -92,7 +92,7 @@ describe('ClientService', () => {
       // Act
       await service.getClients();
       // Assert
-      expect(repositoryMock.find).toHaveBeenCalled();
+      expect(repositoryMock.find).toBeCalled();
     });
 
     it('getClients should returned array of clients', async () => {
@@ -113,7 +113,7 @@ describe('ClientService', () => {
       // Act
       await service.getClientByPhoneEmail(email);
       // Assert
-      expect(repositoryMock.findOneByOrFail).toHaveBeenCalled();
+      expect(repositoryMock.findOneByOrFail).toBeCalled();
     });
 
     it('getClientByEmailPhone should return client by email given', async () => {

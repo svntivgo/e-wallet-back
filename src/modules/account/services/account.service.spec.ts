@@ -43,7 +43,7 @@ describe('AccountService', () => {
     // Act
     const result = await service.getAccountByClient(expected);
     // Assert
-    expect(repositoryMock.findOneByOrFail).toHaveBeenCalled();
+    expect(repositoryMock.findOneByOrFail).toBeCalled();
   });
 
   it('getAccountByClient should returned account by client', async () => {
