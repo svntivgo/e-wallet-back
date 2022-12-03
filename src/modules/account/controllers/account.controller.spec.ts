@@ -2,38 +2,48 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AccountController } from './account.controller';
 import { Client } from '../../client/entities/Client.entity';
 import { Account } from '../entities/Account.entity';
+import { AccountService } from '../services/account.service';
 
 describe('AccountController', () => {
   let controller: AccountController;
+  let service: AccountService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AccountController],
+      providers: [
+        {
+          provide: AccountService,
+          useValue: {
+            getAccountByClient: jest.fn().mockResolvedValue(new Account()),
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<AccountController>(AccountController);
+    service = module.get<AccountService>(AccountService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  it('getAccountByClient should returned account by client', async () => {
+  it('getAccountByClient should call service getAccountByClient', async () => {
     // Arrange
-    const expected = new Account();
     const client = new Client();
     // Act
-    const result = controller.getAccountByClient(client);
+    await controller.getAccountByClient(client);
     // Assert
-    expect(result).toMatchObject(expected);
+    expect(service.getAccountByClient).toBeCalled();
   });
 
-  it('patchAccount should returned account', async () => {
+  it('getAccountByClient should call service getAccountByClient', async () => {
     // Arrange
-    const expected = new Account();
+    const client = new Client();
     // Act
-    const result = controller.patchAccount(new Account());
+    const result = await controller.getAccountByClient(client);
     // Assert
-    expect(result).toMatchObject(expected);
+    expect(result).toBeInstanceOf(Account);
   });
 });

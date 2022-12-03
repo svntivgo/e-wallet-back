@@ -8,13 +8,14 @@ import {
 } from 'typeorm';
 import { Client } from '../../client/entities/Client.entity';
 import { Movement } from '../../movement/entities/Movement.entity';
+import { randomUUID } from 'crypto';
 
 @Index('pkaccount', ['id'], { unique: true })
 @Index('account_cli_id_Idx', ['id'], { unique: true })
 @Entity('account', { schema: 'public' })
 export class Account {
   @Column('uuid', { primary: true, name: 'acc_id' })
-  id: string;
+  id: string = randomUUID();
 
   @Column('uuid', { name: 'cli_id' })
   clientId: string;

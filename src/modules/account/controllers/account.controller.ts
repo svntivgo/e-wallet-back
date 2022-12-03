@@ -1,16 +1,14 @@
 import { Body, Controller, Get, Patch } from '@nestjs/common';
 import { Account } from '../entities/Account.entity';
 import { Client } from '../../client/entities/Client.entity';
+import { AccountService } from '../services/account.service';
 
 @Controller('account')
 export class AccountController {
-  @Get()
-  getAccountByClient(@Body() client: Client): Account {
-    return new Account();
-  }
+  constructor(private readonly service: AccountService) {}
 
-  @Patch()
-  patchAccount(@Body() account: Account): Account {
-    return new Account();
+  @Get()
+  async getAccountByClient(@Body() client: Client): Promise<Account> {
+    return this.service.getAccountByClient(client);
   }
 }

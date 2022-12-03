@@ -14,7 +14,7 @@ describe('AccountService', () => {
 
   const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
     () => ({
-      save: jest.fn().mockResolvedValue(new Account()),
+      findOneByOrFail: jest.fn(),
     }),
   );
 
@@ -37,25 +37,25 @@ describe('AccountService', () => {
     expect(service).toBeDefined();
   });
 
+  it('getAccountByClient should call repository findOneByOrFail method', async () => {
+    // Arrange
+    const expected = new Client();
+    // Act
+    const result = await service.getAccountByClient(expected);
+    // Assert
+    expect(repositoryMock.findOneByOrFail).toHaveBeenCalled();
+  });
+
   it('getAccountByClient should returned account by client', async () => {
     // Arrange
     const expected = new Client();
+    const account = new Account();
     expected.id = '1';
+    account.clientId = '1';
+    repositoryMock.findOneByOrFail?.mockResolvedValue(account);
     // Act
     const result = await service.getAccountByClient(expected);
-    result.clientId = '1';
     // Assert
     expect(result.clientId).toEqual(expected.id);
-  });
-
-  it('patchAccount should returned account patched', async () => {
-    // Arrange
-    const expected = new Account();
-    expected.balance = '1';
-    // Act
-    const result = await service.patchAccount(new Account());
-    result.balance = '2';
-    // Assert
-    expect(result.balance).not.toEqual(expected.balance);
   });
 });

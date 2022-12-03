@@ -11,10 +11,6 @@ export class AccountService {
   ) {}
 
   async getAccountByClient(client: Client): Promise<Account> {
-    return new Account();
-  }
-
-  async patchAccount(account: Account): Promise<Account> {
-    return new Account();
+    return this.repository.findOneByOrFail({ clientId: client.id });
   }
 }
