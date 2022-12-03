@@ -1,12 +1,13 @@
 import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { Client } from '../../client/entities/Client.entity';
+import { randomUUID } from 'crypto';
 
 @Index('pkapp', ['id'], { unique: true })
 @Index('app_cli_id_Idx', ['id'], { unique: true })
 @Entity('app', { schema: 'public' })
 export class Setting {
   @Column('uuid', { primary: true, name: 'app_id' })
-  id: string;
+  id: string = randomUUID();
 
   @Column('uuid', { name: 'cli_id' })
   clientId: string;

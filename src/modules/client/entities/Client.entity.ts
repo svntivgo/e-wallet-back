@@ -47,9 +47,13 @@ export class Client {
   })
   deletedAt: Date | null;
 
-  @OneToOne(() => Account, (account) => account.client)
+  @OneToOne(() => Account, (account) => account.client, {
+    cascade: ['insert', 'update'],
+  })
   account: Account;
 
-  @OneToOne(() => Setting, (setting) => setting.client)
+  @OneToOne(() => Setting, (setting) => setting.client, {
+    cascade: ['insert', 'update'],
+  })
   setting: Setting;
 }
