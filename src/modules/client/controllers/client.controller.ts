@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { createClientDto } from '../dtos/createClientDto.dto';
 import { Client } from '../entities/Client.entity';
 import { ClientService } from '../services/client.service';
@@ -17,8 +17,10 @@ export class ClientController {
     return await this.service.getClients();
   }
 
-  @Get('phone-email')
-  async getClientByPhoneEmail(@Body() phoneEmail: any): Promise<Client> {
-    return await this.service.getClientByPhoneEmail(phoneEmail?.phoneEmail);
+  @Get('phone-email/:phoneEmail')
+  async getClientByPhoneEmail(
+    @Param('phoneEmail') phoneEmail: string,
+  ): Promise<Client> {
+    return await this.service.getClientByPhoneEmail(phoneEmail);
   }
 }
