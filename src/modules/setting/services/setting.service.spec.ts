@@ -4,7 +4,6 @@ import { Setting } from '../entities/Setting.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Client } from '../../client/entities/Client.entity';
-import { notDeepEqual } from 'assert';
 
 describe('SettingService', () => {
   let service: SettingService;
@@ -43,8 +42,9 @@ describe('SettingService', () => {
     it('getSettingByClient should call repositorys findOneByOrFail method', async () => {
       // Arrange
       const client = new Client();
+      client.id = '1';
       // Act
-      await service.getSettingByClient(client);
+      await service.getSettingByClient(client.id);
       // Assert
       expect(repositoryMock.findOneByOrFail).toBeCalled();
     });
@@ -57,7 +57,7 @@ describe('SettingService', () => {
       setting.clientId = '1';
       repositoryMock.findOneByOrFail?.mockResolvedValue(setting);
       // Act
-      const result = await service.getSettingByClient(client);
+      const result = await service.getSettingByClient(client.id);
       // Assert
       expect(result.clientId).toEqual(client.id);
     });

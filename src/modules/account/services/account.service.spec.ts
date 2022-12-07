@@ -40,8 +40,9 @@ describe('AccountService', () => {
   it('getAccountByClient should call repository findOneByOrFail method', async () => {
     // Arrange
     const expected = new Client();
+    expected.id = '1';
     // Act
-    const result = await service.getAccountByClient(expected);
+    const result = await service.getAccountByClient(expected.id);
     // Assert
     expect(repositoryMock.findOneByOrFail).toBeCalled();
   });
@@ -54,7 +55,7 @@ describe('AccountService', () => {
     account.clientId = '1';
     repositoryMock.findOneByOrFail?.mockResolvedValue(account);
     // Act
-    const result = await service.getAccountByClient(expected);
+    const result = await service.getAccountByClient(expected.id);
     // Assert
     expect(result.clientId).toEqual(expected.id);
   });

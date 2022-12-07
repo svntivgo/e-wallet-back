@@ -31,18 +31,18 @@ describe('AccountController', () => {
 
   it('getAccountByClient should call service getAccountByClient', async () => {
     // Arrange
-    const client = new Client();
+    const clientId = '1';
     // Act
-    await controller.getAccountByClient(client);
+    await controller.getAccountByClient(clientId);
     // Assert
     expect(service.getAccountByClient).toBeCalled();
   });
 
   it('getAccountByClient should call service getAccountByClient', async () => {
     // Arrange
-    const client = new Client();
+    const clientId = '1';
     // Act
-    const result = await controller.getAccountByClient(client);
+    const result = await controller.getAccountByClient(clientId);
     // Assert
     expect(result).toBeInstanceOf(Account);
   });

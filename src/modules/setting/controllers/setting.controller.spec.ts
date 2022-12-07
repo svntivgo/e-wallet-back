@@ -34,8 +34,9 @@ describe('SettingController', () => {
     it('getSettingByClient should call service.getSettingByclient', async () => {
       // Arrange
       const client = new Client();
+      client.id = '1';
       // Act
-      await controller.getSettingByClient(client);
+      await controller.getSettingByClient(client.id);
       // Assert
       expect(service.getSettingByClient).toBeCalled();
     });
@@ -43,8 +44,9 @@ describe('SettingController', () => {
     it('getSettingByClient should return setting', async () => {
       // Arrange
       const client = new Client();
+      client.id = '1';
       // Act
-      const result = await controller.getSettingByClient(client);
+      const result = await controller.getSettingByClient(client.id);
       // Assert
       expect(result).toBeInstanceOf(Setting);
     });

@@ -21,10 +21,10 @@ export class Account {
   clientId: string;
 
   @Column('bigint', { name: 'acc_balance', default: () => '0' })
-  balance: string;
+  balance: number;
 
   @Column('bigint', { name: 'acc_credit', default: () => '50000000' })
-  credit: string;
+  credit: number;
 
   @Column('integer', { name: 'acc_state', default: () => '1' })
   state: number;
@@ -54,9 +54,9 @@ export class Account {
   @JoinColumn([{ name: 'cli_id', referencedColumnName: 'id' }])
   client: Client;
 
-  @OneToMany(() => Movement, (movement) => movement.idIncome2)
-  movements: Movement[];
+  @OneToMany(() => Movement, (movement) => movement.accountIncome)
+  movementsIncome: Movement[];
 
-  @OneToMany(() => Movement, (movement) => movement.idOutcome2)
-  movements2: Movement[];
+  @OneToMany(() => Movement, (movement) => movement.accountOutcome)
+  movementsOutcome: Movement[];
 }

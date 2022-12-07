@@ -10,8 +10,8 @@ export class SettingService {
     @InjectRepository(Setting) private repository: Repository<Setting>,
   ) {}
 
-  async getSettingByClient(client: Client): Promise<Setting> {
-    return await this.repository.findOneByOrFail({ clientId: client.id });
+  async getSettingByClient(clientId: string): Promise<Setting> {
+    return await this.repository.findOneByOrFail({ clientId: clientId });
   }
 
   async patchSettingColor(setting: Setting): Promise<Setting> {

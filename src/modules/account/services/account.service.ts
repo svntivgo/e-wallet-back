@@ -10,7 +10,8 @@ export class AccountService {
     @InjectRepository(Account) private repository: Repository<Account>,
   ) {}
 
-  async getAccountByClient(client: Client): Promise<Account> {
-    return this.repository.findOneByOrFail({ clientId: client.id });
+  async getAccountByClient(clientId: string): Promise<Account> {
+    console.log(clientId);
+    return this.repository.findOneByOrFail({ clientId: clientId });
   }
 }
