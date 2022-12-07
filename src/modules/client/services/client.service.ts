@@ -20,7 +20,6 @@ export class ClientService {
     newClient.photo = client.photo;
     newClient.password = '';
     newClient.account = new Account();
-    newClient.account.movements = [];
     newClient.setting = new Setting();
 
     return await this.repository.save(newClient);
