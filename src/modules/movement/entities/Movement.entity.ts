@@ -1,5 +1,6 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { Account } from '../../account/entities/Account.entity';
+import { randomUUID } from 'crypto';
 
 @Index(
   'movement_acc_id_income_acc_id_outcome_Idx',
@@ -10,7 +11,7 @@ import { Account } from '../../account/entities/Account.entity';
 @Entity('movement', { schema: 'public' })
 export class Movement {
   @Column('uuid', { primary: true, name: 'mov_id' })
-  id: string;
+  id: string = randomUUID();
 
   @Column('uuid', { name: 'acc_id_income' })
   idIncome: string;
@@ -22,7 +23,7 @@ export class Movement {
   reason: string;
 
   @Column('bigint', { name: 'mov_amount' })
-  amount: string;
+  amount: number;
 
   @Column('integer', { name: 'mov_fees', default: () => '1' })
   fees: number;

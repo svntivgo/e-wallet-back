@@ -10,7 +10,7 @@ import { AccountService } from '../../account/services/account.service';
 export class MovementService {
   constructor(
     @InjectRepository(Movement) private repository: Repository<Client>,
-    private accountService: AccountService,
+    private readonly accountService: AccountService,
   ) {}
 
   async createMovement(
@@ -21,6 +21,7 @@ export class MovementService {
     movement.idOutcome = createMovementDto.idOutcome;
     movement.reason = createMovementDto.reason;
     movement.amount = createMovementDto.amount;
+    this.accountService.patchLoan(movement.idIncome, movement.amount);
 
     return this.repository.save(movement);
   }
