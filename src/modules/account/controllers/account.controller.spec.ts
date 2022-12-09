@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountController } from './account.controller';
-import { Client } from '../../client/entities/Client.entity';
 import { Account } from '../entities/Account.entity';
 import { AccountService } from '../services/account.service';
 
