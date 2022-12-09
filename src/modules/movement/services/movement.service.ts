@@ -13,7 +13,7 @@ export class MovementService {
     private readonly accountService: AccountService,
   ) {}
 
-  async createMovement(
+  async createLoanMovement(
     createMovementDto: createMovementDto,
   ): Promise<Movement> {
     const movement = new Movement();
@@ -22,6 +22,23 @@ export class MovementService {
     movement.reason = createMovementDto.reason;
     movement.amount = createMovementDto.amount;
     this.accountService.patchLoan(movement.idIncome, movement.amount);
+
+    return this.repository.save(movement);
+  }
+
+  async createPaymentMovement(
+    createMovementDto: createMovementDto,
+  ): Promise<Movement> {
+    const movement = new Movement();
+    movement.idIncome = createMovementDto.idIncome;
+    movement.idOutcome = createMovementDto.idOutcome;
+    movement.reason = createMovementDto.reason;
+    movement.amount = createMovementDto.amount;
+    this.accountService.patchPayment(
+      movement.idIncome,
+      movement.idOutcome,
+      movement.amount,
+    );
 
     return this.repository.save(movement);
   }

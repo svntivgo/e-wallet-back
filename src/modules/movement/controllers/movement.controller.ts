@@ -7,8 +7,13 @@ import { MovementService } from '../services/movement.service';
 export class MovementController {
   constructor(private readonly service: MovementService) {}
 
-  @Patch()
+  @Patch('loan')
   async patchLoan(@Body() dto: createMovementDto): Promise<Movement> {
-    return await this.service.createMovement(dto);
+    return await this.service.createLoanMovement(dto);
+  }
+
+  @Patch('payment')
+  async patchPayment(@Body() dto: createMovementDto): Promise<Movement> {
+    return await this.service.createPaymentMovement(dto);
   }
 }

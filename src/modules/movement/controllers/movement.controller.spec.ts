@@ -15,7 +15,8 @@ describe('MovementController', () => {
         {
           provide: MovementService,
           useValue: {
-            createMovement: jest.fn().mockResolvedValue(new Movement()),
+            createLoanMovement: jest.fn().mockResolvedValue(new Movement()),
+            createPaymentMovement: jest.fn().mockResolvedValue(new Movement()),
           },
         },
       ],
@@ -36,7 +37,7 @@ describe('MovementController', () => {
       // Act
       await controller.patchLoan(movement);
       // Assert
-      expect(service.createMovement).toBeCalled();
+      expect(service.createLoanMovement).toBeCalled();
     });
 
     it('patchLoan should call service patchLoan', async () => {
@@ -44,6 +45,26 @@ describe('MovementController', () => {
       const movement = new createMovementDto();
       // Act
       const result = await controller.patchLoan(movement);
+      // Assert
+      expect(result).toBeInstanceOf(Movement);
+    });
+  });
+
+  describe('patchPayment', () => {
+    it('patchPayment should call service patchPayment', async () => {
+      // Arrange
+      const movement = new createMovementDto();
+      // Act
+      await controller.patchPayment(movement);
+      // Assert
+      expect(service.createPaymentMovement).toBeCalled();
+    });
+
+    it('patchPayment should call service patchPayment', async () => {
+      // Arrange
+      const movement = new createMovementDto();
+      // Act
+      const result = await controller.patchPayment(movement);
       // Assert
       expect(result).toBeInstanceOf(Movement);
     });

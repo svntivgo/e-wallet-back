@@ -124,4 +124,78 @@ describe('AccountService', () => {
       expect(newAccount).toBeInstanceOf(Account);
     });
   });
+
+  describe('patchPayment', () => {
+    it('patchPayment should call repository findOneByOrFail method', async () => {
+      // Arrange
+      const expected = new Movement();
+      const account = new Account();
+      expected.idIncome = '1';
+      expected.idOutcome = '2';
+      expected.amount = 1000;
+      account.id = '1';
+      repositoryMock.findOneByOrFail?.mockResolvedValue(account);
+      // Act
+      await service.patchPayment(
+        expected.idIncome,
+        expected.idOutcome,
+        expected.amount,
+      );
+      // Assert
+      expect(repositoryMock.findOneByOrFail).toBeCalled();
+    });
+
+    it('patchPayment should call repository increment, decrement method', async () => {
+      // Arrange
+      const expected = new Movement();
+      const account = new Account();
+      expected.idIncome = '1';
+      expected.idOutcome = '2';
+      expected.amount = 1000;
+      account.id = '1';
+      repositoryMock.findOneByOrFail?.mockResolvedValue(account);
+      // Act
+      await service.patchPayment(
+        expected.idIncome,
+        expected.idOutcome,
+        expected.amount,
+      );
+      // Assert
+      expect(repositoryMock.increment).toBeCalled();
+      expect(repositoryMock.decrement).toBeCalled();
+    });
+
+    it('patchPayment should returned account patched', async () => {
+      // Arrange
+      const expected = new Movement();
+      const accountOutcome = new Account();
+      const accountIncome = new Account();
+      expected.idIncome = '1';
+      expected.idOutcome = '2';
+      expected.amount = 1000;
+      accountIncome.id = '1';
+      accountIncome.balance = 3000;
+      accountOutcome.id = '2';
+      accountOutcome.balance = 3000;
+      repositoryMock.findOneByOrFail?.mockResolvedValue(accountIncome);
+      repositoryMock.decrement?.mockResolvedValue({
+        ...accountOutcome,
+        ...[(accountOutcome.balance -= expected.amount)],
+      });
+      repositoryMock.increment?.mockResolvedValue({
+        ...accountIncome,
+        ...[(accountIncome.balance += expected.amount)],
+      });
+      // Act
+      const newAccount = await service.patchPayment(
+        expected.idIncome,
+        expected.idOutcome,
+        expected.amount,
+      );
+      // Assert
+      expect(accountIncome.balance).toEqual(4000);
+      expect(accountOutcome.balance).toEqual(2000);
+      expect(newAccount).toBeInstanceOf(Account);
+    });
+  });
 });

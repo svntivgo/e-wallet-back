@@ -56,23 +56,45 @@ describe('MovementService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('createMovement', () => {
-    it('createMovement should call repository save method', async () => {
+  describe('createLoanMovement', () => {
+    it('createLoanMovement should call repository save method', async () => {
       // Arrange
       const expected = new Movement();
       // Act
-      await service.createMovement(expected);
+      await service.createLoanMovement(expected);
       // Assert
       expect(repositoryMock.save).toBeCalled();
     });
 
-    it('createMovement should returned new movement', async () => {
+    it('createLoanMovement should returned new movement', async () => {
       // Arrange
       const expected = new createMovementDto();
       const movement = new Movement();
       repositoryMock.save?.mockResolvedValue(movement);
       // Act
-      const result = await service.createMovement(expected);
+      const result = await service.createLoanMovement(expected);
+      // Assert
+      expect(result).toBeInstanceOf(Movement);
+    });
+  });
+
+  describe('createPaymentMovement', () => {
+    it('createPaymentMovement should call repository save method', async () => {
+      // Arrange
+      const expected = new Movement();
+      // Act
+      await service.createPaymentMovement(expected);
+      // Assert
+      expect(repositoryMock.save).toBeCalled();
+    });
+
+    it('createPaymentMovement should returned new movement', async () => {
+      // Arrange
+      const expected = new createMovementDto();
+      const movement = new Movement();
+      repositoryMock.save?.mockResolvedValue(movement);
+      // Act
+      const result = await service.createPaymentMovement(expected);
       // Assert
       expect(result).toBeInstanceOf(Movement);
     });

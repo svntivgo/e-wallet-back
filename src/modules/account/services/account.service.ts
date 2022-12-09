@@ -20,7 +20,35 @@ export class AccountService {
     await this.repository.decrement({ id: account.id }, 'credit', amount);
     await this.repository.increment({ id: account.id }, 'balance', amount);
     return await this.repository.findOneByOrFail({
-      id: accountId,
+      id: account.id,
+    });
+  }
+
+  async patchPayment(
+    incomeId: string,
+    outcomeId: string,
+    amount: number,
+  ): Promise<Account> {
+    const incomeAccount = await this.repository.findOneByOrFail({
+      id: incomeId,
+    });
+    const outcomeAccount = await this.repository.findOneByOrFail({
+      id: outcomeId,
+    });
+
+    await this.repository.increment(
+      { id: incomeAccount.id },
+      'balance',
+      amount,
+    );
+    await this.repository.decrement(
+      { id: outcomeAccount.id },
+      'balance',
+      amount,
+    );
+
+    return await this.repository.findOneByOrFail({
+      id: outcomeAccount.id,
     });
   }
 }
