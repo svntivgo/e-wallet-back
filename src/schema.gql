@@ -1,0 +1,56 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Movement {
+  id: String!
+  idIncome: String!
+  idOutcome: String!
+  reason: String!
+  amount: Int!
+  fees: Int!
+  datetime: String!
+
+  """Account Income"""
+  accountIncome: Account!
+
+  """Account Outcome"""
+  accountOutcome: Account!
+}
+
+type Account {
+  id: String!
+  clientId: String!
+  balance: Int!
+  credit: Int!
+  state: Int!
+  createdAt: String!
+  updatedAt: String
+  deletedAt: String
+
+  """Client"""
+  client: Client!
+
+  """Movement Income."""
+  movementsIncome: Movement!
+
+  """Movement Outcome"""
+  movementsOutcome: Movement!
+}
+
+type Client {
+  id: String!
+  fullName: String!
+  email: String!
+  phone: String!
+  photo: String!
+  password: String!
+  state: Int!
+  createdAt: String!
+  updatedAt: String
+  deletedAt: String
+}
+
+type Query {
+  ElQueYoQuiero: String!
+}
