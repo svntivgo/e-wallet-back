@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Client } from 'src/modules/client/entities/Client.entity';
 import { Repository } from 'typeorm';
 import { Movement } from '../entities/Movement.entity';
 import { createMovementDto } from '../dtos/createMovementDto';
 import { AccountService } from '../../account/services/account.service';
-import { lastMovementDto } from '../dtos/lastMovementDto';
+import { LastMovementDto } from '../dtos/lastMovementDto';
 
 @Injectable()
 export class MovementService {
@@ -44,7 +43,7 @@ export class MovementService {
     return this.repository.save(movement);
   }
 
-  async getLastMovements(accountId: string): Promise<lastMovementDto[]> {
+  async getLastMovements(accountId: string): Promise<LastMovementDto[]> {
     const movements = await this.repository
       .createQueryBuilder()
       .where({ idIncome: accountId })
@@ -54,7 +53,7 @@ export class MovementService {
       .getMany()
       .then((movements) =>
         movements.map(async (movement) => {
-          const lastMovement = new lastMovementDto();
+          const lastMovement = new LastMovementDto();
           lastMovement.amount = movement.amount;
           lastMovement.idIncome = movement.idIncome;
           lastMovement.idOutcome = movement.idOutcome;

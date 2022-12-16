@@ -2,7 +2,7 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 import { ApiProperty } from '@nestjs/swagger';
 
 @InputType()
-export class lastMovementDto {
+export class LastMovementDto {
   @ApiProperty({
     example: 'UUID',
     description: 'Accounts ID where amount will go.',

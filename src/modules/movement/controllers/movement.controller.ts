@@ -8,7 +8,7 @@ import {
 import { createMovementDto } from '../dtos/createMovementDto';
 import { Movement } from '../entities/Movement.entity';
 import { MovementService } from '../services/movement.service';
-import { lastMovementDto } from '../dtos/lastMovementDto';
+import { LastMovementDto } from '../dtos/lastMovementDto';
 
 @ApiBearerAuth('Token auth0')
 @ApiTags('Movement')
@@ -44,7 +44,7 @@ export class MovementController {
   @Get('/:accountId')
   async getLastMovements(
     @Param('accountId') accountId: string,
-  ): Promise<lastMovementDto[]> {
+  ): Promise<LastMovementDto[]> {
     return await this.service.getLastMovements(accountId);
   }
 }
