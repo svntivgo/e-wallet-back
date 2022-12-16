@@ -15,6 +15,12 @@ export class AccountService {
     return this.repository.findOneByOrFail({ clientId: clientId });
   }
 
+  async getClientPhotoByAccount(accountId: string): Promise<string> {
+    const account = await this.repository.findOneByOrFail({ id: accountId });
+
+    return await this.clientService.getClientPhoto(account.clientId);
+  }
+
   async getAccountByClientPhoneEmail(phoneEmail: string): Promise<Account> {
     const client = await this.clientService.getClientByPhoneEmail(phoneEmail);
     return this.repository.findOneByOrFail({ clientId: client.id });

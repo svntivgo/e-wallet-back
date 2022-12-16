@@ -14,6 +14,7 @@ export class ClientService {
 
   async createClient(client: createClientDto): Promise<Client> {
     const newClient = new Client();
+    console.log('ESTE ES EL ID', newClient.id);
     newClient.fullName = client.fullName;
     newClient.email = client.email;
     newClient.phone = client.phone;
@@ -36,6 +37,11 @@ export class ClientService {
 
   async getClients(): Promise<Client[]> {
     return await this.repository.find();
+  }
+
+  async getClientPhoto(clientId: string): Promise<string> {
+    const client = await this.repository.findOneByOrFail({ id: clientId });
+    return client.photo;
   }
 
   async getClientByPhoneEmail(phoneEmail: string): Promise<Client> {

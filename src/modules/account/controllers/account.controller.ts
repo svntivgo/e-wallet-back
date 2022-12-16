@@ -27,6 +27,19 @@ export class AccountController {
     return this.service.getAccountByClient(clientId);
   }
 
+  @ApiOperation({ summary: 'Get clients photo by his account' })
+  @ApiResponse({
+    status: 200,
+    description:
+      'OK. The response contain clients photo url corresponding to the request.',
+  })
+  @Get('/client-photo/:accountId')
+  async getClientPhotoByAccount(
+    @Param('accountId') accountId: string,
+  ): Promise<string> {
+    return this.service.getClientPhotoByAccount(accountId);
+  }
+
   @ApiOperation({ summary: 'Get an Account by phone or email' })
   @ApiResponse({
     status: 200,

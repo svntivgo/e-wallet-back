@@ -26,7 +26,7 @@ export class Client {
   @Field(() => String)
   phone: string;
 
-  @Column('character varying', { name: 'cli_photo', length: 36 })
+  @Column('character varying', { name: 'cli_photo', length: 500 })
   @Field(() => String)
   photo: string;
 
