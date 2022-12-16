@@ -6,8 +6,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalGuards(new TokenVerificationGuard());
-  app.useGlobalInterceptors(new TokenInterceptor());
+  // app.useGlobalGuards(new TokenVerificationGuard());
+  // app.useGlobalInterceptors(new TokenInterceptor());
   const config = new DocumentBuilder()
     .setTitle('eWallet')
     .setDescription('Documentación de eWallet API')

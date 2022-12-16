@@ -1,4 +1,5 @@
 import { Query, Resolver } from '@nestjs/graphql';
+import { Setting } from '../modules/setting/entities/Setting.entity';
 
 @Resolver()
 export class ClientResolver {

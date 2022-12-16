@@ -25,6 +25,16 @@ export class ClientController {
     return await this.service.createClient(client);
   }
 
+  @ApiOperation({ summary: 'Patch Clients password and phone' })
+  @ApiResponse({
+    status: 200,
+    description: 'OK. The response contains client patched.',
+  })
+  @Post()
+  async patchClient(@Body() client: Client): Promise<Client> {
+    return await this.service.patchClient(client);
+  }
+
   @ApiOperation({ summary: 'Get all Clients' })
   @ApiResponse({
     status: 200,

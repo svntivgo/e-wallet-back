@@ -25,6 +25,15 @@ export class ClientService {
     return await this.repository.save(newClient);
   }
 
+  async patchClient(client: Client): Promise<Client> {
+    const oldClient = await this.repository.findOneByOrFail({
+      email: client.email,
+    });
+    oldClient.phone = client.phone;
+    oldClient.password = client.password;
+    return await this.repository.save(oldClient);
+  }
+
   async getClients(): Promise<Client[]> {
     return await this.repository.find();
   }
