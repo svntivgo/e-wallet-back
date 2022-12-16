@@ -1,4 +1,4 @@
-import { Body, Controller, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -33,5 +33,17 @@ export class MovementController {
   @Patch('payment')
   async patchPayment(@Body() dto: createMovementDto): Promise<Movement> {
     return await this.service.createPaymentMovement(dto);
+  }
+
+  @ApiOperation({ summary: 'Get last 10 movements' })
+  @ApiResponse({
+    status: 200,
+    description: 'OK. Return an array of last 10 movements.',
+  })
+  @Get('/:accountId')
+  async getLastMovements(
+    @Param('accountId') accountId: string,
+  ): Promise<Movement[]> {
+    return await this.service.getLastMovements(accountId);
   }
 }

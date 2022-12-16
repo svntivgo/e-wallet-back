@@ -9,7 +9,7 @@ import { AccountService } from '../../account/services/account.service';
 @Injectable()
 export class MovementService {
   constructor(
-    @InjectRepository(Movement) private repository: Repository<Client>,
+    @InjectRepository(Movement) private repository: Repository<Movement>,
     private readonly accountService: AccountService,
   ) {}
 
@@ -41,5 +41,15 @@ export class MovementService {
     );
 
     return this.repository.save(movement);
+  }
+
+  async getLastMovements(accountId: string): Promise<Movement[]> {
+    return this.repository
+      .createQueryBuilder()
+      .where({ idIncome: accountId })
+      .orWhere({ idOutcome: accountId })
+      .orderBy('mov_datetime', 'DESC')
+      .limit(10)
+      .execute();
   }
 }
