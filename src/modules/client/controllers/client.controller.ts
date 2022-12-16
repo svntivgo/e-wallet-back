@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -30,7 +30,7 @@ export class ClientController {
     status: 200,
     description: 'OK. The response contains client patched.',
   })
-  @Post()
+  @Patch()
   async patchClient(@Body() client: Client): Promise<Client> {
     return await this.service.patchClient(client);
   }
